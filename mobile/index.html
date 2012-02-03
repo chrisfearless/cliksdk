@@ -1,0 +1,80 @@
+<html>
+	<head>
+		<title>Clik Demo</title>
+		<link rel="stylesheet" href="css/mobile.css" />
+		<script src="http://live.betaclik.com/js/lib/phonegap-1.2.0.js" type="text/javascript"></script>
+		<script src="http://live.betaclik.com/js/clik-mobile.min.js" type="text/javascript"></script>
+		<script src="../manifest.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			// This is the page that the mobile client sees.
+			// This code is better documented in index.html.
+			clik.onMessage = function(msg) {
+				$("#messageLog").prepend(msg + "<hr/>")
+			}
+			clik.onJoin = function(newParticipant) {
+				// Build an <li> entry for this participant, ensuring it's not already there.
+				var partEleKey = "part" + newParticipant;
+				if($("#" + partEleKey).length == 0) {
+					var sb = new Array();
+					sb.push("<li id=\"");
+					sb.push(partEleKey);
+					sb.push("\">");
+					sb.push(newParticipant);
+					sb.push("</li>");
+					$("#parts").prepend(sb.join(""));
+				}
+
+				// Say hello
+				clik.sendMessage("Hello " + newParticipant + ", I'm " + clik.getParticipantId());
+			}
+
+			clik.onReady = function() {
+				$("#messageLog").append("Clik API reports ready<hr/>")
+				$("#conferenceId").val(clik.getConferenceId());
+				$("#participantId").val(clik.getParticipantId());
+			}
+			$(function() {
+				clik.init();
+
+				$("#say").click(function() {
+					var txt = $("#textInput").val();
+					console.log(txt);
+					clik.sendMessage(txt);
+				});
+			});
+
+		</script>
+	</head>
+	<body>
+		<div id="stage">
+			<div>
+				<div class="label">
+					Conference
+				</div>
+				<input id="conferenceId" size="36" />
+				<br />
+				<div class="label">
+					Participant
+				</div>
+				<input id="participantId" value="" size="36" />
+				<br />
+			</div>
+			<hr/>
+			<div>
+				<div class="label">
+					Say:
+				</div>
+				<input id="textInput" value="Hello world" size="36" />
+				<br/>
+				<div class="label">
+					&nbsp
+				</div>
+				<input type="button" id="say" value="Say" />
+			</div>
+			<h1>Participants</h1>
+			<ul id="parts"></ul>
+			<h1>Messages</h1>
+			<div id="messageLog"></div>
+		</div>
+	</body>
+</html>

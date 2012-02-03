@@ -1,0 +1,109 @@
+<html>
+	<head>
+		<title>Example App</title>
+		<link rel="stylesheet" href="css/desktop.css" />
+		<script src="http://live.betaclik.com/js/clik-desktop.min.js" type="text/javascript"></script>
+		<script src="manifest.js" type="text/javascript"></script>
+		<!-- User JavaScript -->
+		<script type="text/javascript">
+			// This is the page that the desktop client sees.
+
+			// There's an objects called 'clik'.
+			// It has members that are functions that are called when things happen.
+
+			// Whenever we recieve a message.
+			clik.onMessage = function(msg) {
+				// Stick the message at the top of the 'messageLog' element.
+				$("#messageLog").prepend(msg + "<hr/>")
+			}
+			// Whenever someone joins the conference.
+			clik.onJoin = function(newParticipant) {
+				// Build an <li> entry for this participant, ensuring it's not already there.
+				var partEleKey = "part" + newParticipant;
+				if($("#" + partEleKey).length == 0) {
+					var sb = new Array();
+					sb.push("<li id=\"");
+					sb.push(partEleKey);
+					sb.push("\">");
+					sb.push(newParticipant);
+					sb.push("</li>");
+					$("#parts").prepend(sb.join(""));
+				}
+
+				// Say hello
+				clik.sendMessage("Hello " + newParticipant + ", I'm " + clik.getParticipantId());
+			}
+			// Whenever someone leaves the conference.
+			clik.onPart = function(oldParticipant) {
+				// Remove the <li> we created when the person joined.
+				$("#messageLog").prepend("Part: " + oldParticipant + "<hr/>");
+				var partEleKey = "part" + oldParticipant;
+				$("#" + partEleKey).remove();
+			}
+			// When we've successfully connected to the conference
+			// Note: this is optional, if it isn't set, Clik will overlay the page with a QR code.
+			clik.onReady = function() {
+				clik.showClikCode();
+
+				// Hey look, some other methods we can call on the 'clik' object.
+				$("#qrContainer").css('background-image', 'url(' + clik.ui.clikCodeUrl() + ')');
+				$("#conferenceId").val(clik.getConferenceId());
+				$("#participantId").val(clik.getParticipantId());
+			}
+			// Finally, we tell Clik to initialize.
+			clik.init();
+
+			// And start worrying about OUR logic (i.e. not directly related to clik events).
+			// All we'll do is send a message whenever someone clicks the 'say' button.
+			$(function() {
+				$("#say").click(function() {
+					var txt = $("#textInput").val();
+					clik.sendMessage(txt);
+				});
+			});
+
+		</script>
+		<style type="text/css">
+			#clik-overlay {
+				background-color: #333333;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="qrContainer"></div>
+		<div id="stage">
+			<div>
+				<div class="label">
+					Conference
+				</div>
+				<input id="conferenceId" size="36" />
+				<br />
+				<div class="label">
+					Participant
+				</div>
+				<input id="participantId" value="" size="36" />
+				<br />
+			</div>
+			<hr/>
+			<div>
+				<div class="label">
+					Say:
+				</div>
+				<input id="textInput" value="Hello world" size="36" />
+				<br/>
+				<div class="label">
+					&nbsp;
+				</div>
+				<input type="button" id="say" value="Say" />
+			</div>
+			<h1>Participants</h1>
+			<ul id="parts"></ul>
+			<h1>Messages</h1>
+			<div id="messageLog"></div>
+			<div id="debugContainer" style="display:none">
+				<h1>Debug Log</h1>
+				<div id="debug"></div>
+			</div>
+		</div>
+	</body>
+</html>
