@@ -33,7 +33,18 @@
 				$("#conferenceId").val(clik.getConferenceId());
 				$("#participantId").val(clik.getParticipantId());
 			}
+
 			$(function() {
+				$("#disconnect-button").click(function() {
+					clik.clikScreen(true);
+				});
+
+				$(".hasDownState").live("touchstart", function() {
+					$(this).addClass("downState");
+				}).live("touchend touchmove", function() {
+					$(this).removeClass("downState");
+				});
+
 				clik.init();
 
 				$("#say").click(function() {
@@ -46,7 +57,7 @@
 		</script>
 	</head>
 	<body>
-		<div id="stage">
+		<div id="page">
 			<header>
 				<div id="disconnect-button" class="header-button hasDownState"></div>
 				<h1 id="section-title">Home Page</h1>

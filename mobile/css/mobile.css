@@ -2,6 +2,34 @@ input {
 	font-size: 0.8em;
 }
 
+* {
+	border: none;
+}
+
+body {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	background: #aaa;
+	-webkit-user-select: none;
+	-webkit-text-size-adjust: none;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	font-family: Droid Sans, Helvetica, sans-serif;
+}
+
+div#page {
+	height: 100%;
+	width: 100%;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-align: stretch;
+	background: #D8DADD;
+	margin: 0;
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+
 /***** TITLE *****/
 
 header {
@@ -15,6 +43,7 @@ header {
 	-webkit-box-flex: 0;
 	height: 72px;
 }
+
 header h1 {
 	margin: 0;
 	text-align: center;
@@ -23,6 +52,7 @@ header h1 {
 	line-height: 72px;
 	color: #0D3669;
 }
+
 header div.header-button {
 	width: 72px;
 	height: 57px;
@@ -30,9 +60,11 @@ header div.header-button {
 	margin: 9px;
 	text-decoration: none;
 }
+
 #disconnect-button {
 	background-image: url('../img/clik_button.png');
 }
+
 #disconnect-button.downState {
 	background-image: url('../img/clik_button_on.png');
 }
