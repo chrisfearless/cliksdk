@@ -2,12 +2,37 @@ input {
 	font-size: 0.8em;
 }
 
-#disconnect {
-	position: absolute;
-	top: 20px;
-	left: 20px;
-}
+/***** TITLE *****/
 
-.downState {
-	background: #DDDDFF;
+header {
+	background-image: url('../img/top_bar_filler.png');
+	-webkit-background-size: contain;
+	background-repeat: repeat-x;
+	color: black;
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-align: stretch;
+	-webkit-box-flex: 0;
+	height: 72px;
+}
+header h1 {
+	margin: 0;
+	text-align: center;
+	-webkit-box-flex: 1;
+	font-size: 32px;
+	line-height: 72px;
+	color: #0D3669;
+}
+header div.header-button {
+	width: 72px;
+	height: 57px;
+	display: block;
+	margin: 9px;
+	text-decoration: none;
+}
+#disconnect-button {
+	background-image: url('../img/clik_button.png');
+}
+#disconnect-button.downState {
+	background-image: url('../img/clik_button_on.png');
 }
