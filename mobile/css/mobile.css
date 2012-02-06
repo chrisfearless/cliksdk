@@ -1,3 +1,13 @@
 input {
 	font-size: 0.8em;
 }
+
+#disconnect {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+}
+
+.downState {
+	background: #DDDDFF;
+}
